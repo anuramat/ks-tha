@@ -14,7 +14,10 @@ def get_sheet(
     majorDimension: dimension = dimension.rows,
 ) -> list[list[str]]:
 
-    scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+    scopes = [
+        "https://www.googleapis.com/auth/spreadsheets.readonly",
+        "https://www.googleapis.com/auth/drive.readonly",
+    ]
 
     credentials = service_account.Credentials.from_service_account_file(
         "credentials.json", scopes=scopes
@@ -33,8 +36,12 @@ def get_sheet(
 
 
 def main():
+    """
+    prints all rows of the document
+    """
     res = get_sheet()
     for l in res:
+        # prints rows
         print(l)
 
 
