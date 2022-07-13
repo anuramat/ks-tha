@@ -26,13 +26,14 @@ def get_usd_rate() -> Decimal:
         # <Element 'Name' at 0x1037752c0> Доллар США
         # <Element 'Value' at 0x103775310> 58,5322
         if currency.attrib["ID"] == _usd_id:
-            # XXX check charcode, name? 
+            # XXX check charcode, name?
             # TODO catch for empty/nonparseable string
             str_rate = currency.find("Value").text
-            decimal_rate = Decimal('.'.join(str_rate.split(',')))
+            decimal_rate = Decimal(".".join(str_rate.split(",")))
             return decimal_rate
-    # TODO change exception type 
+    # TODO change exception type
     raise Exception
+
 
 def main():
     print(get_usd_rate())

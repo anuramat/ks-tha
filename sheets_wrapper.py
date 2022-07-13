@@ -2,16 +2,20 @@ from googleapiclient import discovery
 from google.oauth2 import service_account
 import enum
 
+
 class dimension(enum.Enum):
-    rows = 'ROWS'
-    columns = 'COLUMNS'
+    rows = "ROWS"
+    columns = "COLUMNS"
+
 
 def get_sheet(
     range: str = "Лист1",
     spreadsheet_id: str = "1oy13To3eyYlNDEs49TekBWFBKLycmoq0-wAjl2kEOdY",
-    majorDimension: dimension  = dimension.rows
+    majorDimension: dimension = dimension.rows,
 ) -> list[list[str]]:
+
     scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+
     credentials = service_account.Credentials.from_service_account_file(
         "credentials.json", scopes=scopes
     )
@@ -19,16 +23,20 @@ def get_sheet(
     service = discovery.build("sheets", "v4", credentials=credentials)
 
     request = (
-        service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range,majorDimension=majorDimension)
+        service.spreadsheets()
+        .values()
+        .get(spreadsheetId=spreadsheet_id, range=range, majorDimension=majorDimension)
     )
     response = request.execute()
 
-    return response['values']
+    return response["values"]
+
 
 def main():
     res = get_sheet()
     for l in res:
         print(l)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
