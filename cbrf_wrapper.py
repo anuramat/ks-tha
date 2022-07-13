@@ -36,6 +36,9 @@ def get_usd_rate() -> Decimal:
 
 
 def main():
+    """
+    prints usd rate
+    """
     print(get_usd_rate())
 
 

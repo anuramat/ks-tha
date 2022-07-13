@@ -41,7 +41,6 @@ def main():
     """
     res = get_sheet()
     for l in res:
-        # prints rows
         print(l)
 
 
