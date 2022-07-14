@@ -1,23 +1,21 @@
 from googleapiclient import discovery
 from google.oauth2 import service_account
-import enum
+from dotenv import dotenv_values
+from enum import Enum
 
 
-class dimension(enum.Enum):
+class dimension(Enum):
     rows = "ROWS"
     columns = "COLUMNS"
 
 
 def get_sheet(
-    range: str = "Лист1",
-    spreadsheet_id: str = "1oy13To3eyYlNDEs49TekBWFBKLycmoq0-wAjl2kEOdY",
-    majorDimension: dimension = dimension.rows,
+    range: str,
+    spreadsheet_id: str,
+    dim: dimension = dimension.rows,
 ) -> list[list[str]]:
 
-    scopes = [
-        "https://www.googleapis.com/auth/spreadsheets.readonly",
-        "https://www.googleapis.com/auth/drive.readonly",
-    ]
+    scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
     credentials = service_account.Credentials.from_service_account_file(
         "credentials.json", scopes=scopes
@@ -28,7 +26,7 @@ def get_sheet(
     request = (
         service.spreadsheets()
         .values()
-        .get(spreadsheetId=spreadsheet_id, range=range, majorDimension=majorDimension)
+        .get(spreadsheetId=spreadsheet_id, range=range, majorDimension=dim.value)
     )
     response = request.execute()
 
@@ -39,7 +37,9 @@ def main():
     """
     prints all rows of the document
     """
-    res = get_sheet()
+    env = dotenv_values(".env")
+    res = get_sheet(env["sheet_name"], env["spreadsheet_id"])
+
     for l in res:
         print(l)
 
