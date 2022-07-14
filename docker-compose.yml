@@ -1,0 +1,21 @@
+version: "1.0"
+services:
+  main:
+    build: .
+    ports:
+      - "5000:5000"
+    command: python /code/src/change_webhook.py
+  nginx:
+    image:
+  nginx-ssl-proxy:
+    image: danieldent/nginx-ssl-proxy
+    restart: always
+    environment:
+      UPSTREAM: 127.0.0.1:5000
+      SERVERNAME: nuramatov.com
+      EXTRANAMES: www.nuramatov.com
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/etc/letsencrypt"
