@@ -6,7 +6,7 @@ services:
       - "5000:5000"
     volumes:
       - type: bind
-        source: /home/arsen/dev/ks-tha/
+        source: .
         target: /code/
     command: python src/app.py
   nginx-ssl-proxy:
@@ -14,8 +14,7 @@ services:
     restart: always
     environment:
       UPSTREAM: main:5000
-      SERVERNAME: nuramatov.com
-      EXTRANAMES: www.nuramatov.com
+      SERVERNAME: ${hostname}
     ports:
       - "80:80"
       - "443:443"
