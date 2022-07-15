@@ -1,10 +1,12 @@
 from flask import Flask, request
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 app = Flask(__name__)
 
 
 @app.route("/")
-def file_changed():
+def index():
     return "nothing here..."
 
 
@@ -24,5 +26,11 @@ def result():
     print(request.headers.get('X-Goog-Resource-State'), flush=True)
     return 'xd'
 
+def test_job():
+    print('testjobdone', flush=True)
+
 if __name__ == "__main__":
+    scheduler = BackgroundScheduler()
+    job = scheduler.add_job(test_job, 'interval', seconds=2)
+    scheduler.start()
     app.run(host="0.0.0.0", port=5000, debug=True)
