@@ -9,6 +9,8 @@ services:
         source: .
         target: /code/
     command: python src/app.py
+    environment:
+      channel_path: /update
   nginx-ssl-proxy:
     image: danieldent/nginx-ssl-proxy
     restart: always
