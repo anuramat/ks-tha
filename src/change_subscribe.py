@@ -1,7 +1,6 @@
 from __future__ import print_function
 
-import os.path
-from dotenv import dotenv_values
+from os import environ
 
 from google.auth.transport.requests import Request
 from google.oauth2 import service_account
@@ -29,9 +28,8 @@ def subscribe(file_id: str, channel_id: str, channel_address: str):
 
 
 if __name__ == "__main__":
-    env = dotenv_values(".env")
     subscribe(
-        file_id=env["spreadsheet_id"],
-        channel_id=env["channel"],
+        file_id=environ.get("spreadsheet_id"),
+        channel_id=environ.get("channel"),
         channel_address="http://85.143.220.82:5000/update",
     )

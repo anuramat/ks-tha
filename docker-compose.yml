@@ -1,0 +1,25 @@
+version: "1.0"
+services:
+  main:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - type: bind
+        source: /home/arsen/dev/ks-tha/
+        target: /code/
+    command: python src/change_webhook.py
+  nginx-ssl-proxy:
+    image: danieldent/nginx-ssl-proxy
+    restart: always
+    environment:
+      UPSTREAM: main:5000
+      SERVERNAME: nuramatov.com
+      EXTRANAMES: www.nuramatov.com
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/etc/letsencrypt"
+    depends_on:
+      - "main"
