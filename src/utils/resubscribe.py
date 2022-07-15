@@ -27,8 +27,12 @@ def unsubscribe(body: dict, service) -> str:
         print(f"unsubscribe error: {error}")
 
 
-def main():
-
+def resubscribe():
+    """
+    Subscribes to google api file change notifications.
+    Notifications arrive to update endpoint.
+    Subscription is active for an hour and thus needs to be updated.
+    """
     proj_path = Path(environ.get("proj_path"))
     creds = service_account.Credentials.from_service_account_file(
         proj_path / "credentials.json", scopes=_scopes
@@ -64,7 +68,3 @@ def main():
         resource_id = sub_response["resourceId"]
         with open(proj_path / resource_id_filename, "w") as file:
             file.write(resource_id)
-
-
-if __name__ == "__main__":
-    main()
