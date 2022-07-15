@@ -8,7 +8,11 @@ services:
       - type: bind
         source: /home/arsen/dev/ks-tha/
         target: /code/
+<<<<<<< HEAD
     command: python src/change_webhook.py
+=======
+    command: python src/app.py
+>>>>>>> 1026da7 (notifications kinda working)
   nginx-ssl-proxy:
     image: danieldent/nginx-ssl-proxy
     restart: always
