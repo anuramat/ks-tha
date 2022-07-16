@@ -29,9 +29,10 @@ def unsubscribe(body: dict, service) -> str:
 
 def resubscribe():
     """
-    Subscribes to google api file change notifications.
-    Notifications arrive to update endpoint.
-    Subscription is active for an hour and thus needs to be updated.
+    Updates/creates subscription to google api file change notifications,
+    saves resourceID to disk.
+    Notifications arrive to "update" endpoint by default.
+    Subscription is active for an hour.
     """
     proj_path = Path(environ.get("proj_path"))
     creds = service_account.Credentials.from_service_account_file(
