@@ -21,11 +21,11 @@ service = discovery.build("sheets", "v4", credentials=creds)
 request = (
     service.spreadsheets()
     .values()
-    .get(spreadsheetId=spreadsheet_id, range=range, majorDimension=dimension.rows)
+    .get(spreadsheetId=spreadsheet_id, range=range, majorDimension=dimension.rows.value)
 )
 
 
-def wrapper() -> list[list[str]]:
+def get_data() -> list[list[str]]:
     """
     returns spreadsheet as list of lists
     range specifications can be found here:
@@ -34,3 +34,5 @@ def wrapper() -> list[list[str]]:
     response = request.execute()
 
     return response["values"]
+
+wrapper()
