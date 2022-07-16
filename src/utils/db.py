@@ -7,7 +7,7 @@ password = environ.get("POSTGRES_PASSWORD")
 user = environ.get("POSTGRES_USER")
 db = environ.get("POSTGRES_DB")
 dbhost = environ.get("dbhost")
-SQLALCHEMY_DATABASE_URL = 'postgresql://{user}:{password}@{dbhost}:5432/{db}'
+SQLALCHEMY_DATABASE_URL = f'postgresql://{user}:{password}@{dbhost}:5432/{user}'
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
