@@ -5,7 +5,7 @@ from sqlalchemy import select
 from utils.db import Session
 from datetime import date
 from utils.data import get_data
-from exchange_rate import get_usd_rate
+from utils.exchange_rate import get_usd_rate
 
 # read stuff
 def load_data():
