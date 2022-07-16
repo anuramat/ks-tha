@@ -21,7 +21,7 @@ service = discovery.build("sheets", "v4", credentials=creds)
 request = (
     service.spreadsheets()
     .values()
-    .get(spreadsheetId=spreadsheet_id, range=range, majorDimension=dim.value)
+    .get(spreadsheetId=spreadsheet_id, range=range, majorDimension=dimension.rows)
 )
 
 
@@ -34,7 +34,3 @@ def wrapper() -> list[list[str]]:
     response = request.execute()
 
     return response["values"]
-
-
-print(wrapper())
-print(wrapper())
