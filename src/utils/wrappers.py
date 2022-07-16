@@ -2,20 +2,20 @@ from utils import models
 from utils.db import engine
 from utils.db import Base
 from sqlalchemy import select
-from utils.db import sessionmaker
+from utils.db import Session
 from datetime import date
 
 
 # read stuff
 def load_data():
-    with sessionmaker() as session:
+    with Session() as session:
         stmt = select(models.Order)
         for order in session.scalars(stmt):
             print(order)
 
 
 def save_data():
-    with sessionmaker() as session:
+    with Session() as session:
         # TODO
         firstrow = models.Order(
             pseudo_id=123,
@@ -26,3 +26,6 @@ def save_data():
         )
         session.add_all([firstrow])
         session.commit()
+
+save_data()
+load_data()
