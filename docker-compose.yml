@@ -11,6 +11,7 @@ services:
     command: python src/app.py
     environment:
       channel_path: /update
+    env_file: .env
   nginx-ssl-proxy:
     image: danieldent/nginx-ssl-proxy
     restart: always

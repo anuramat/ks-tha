@@ -47,7 +47,7 @@ def resubscribe():
             resource_id = file.read()
     except FileNotFoundError:
         print("Resource ID file not found (as expected on first subscription)")
-    address = "https://" + environ.get("hostname") + environ.get("channel_address")
+    address = "https://" + environ.get("hostname") + environ.get("channel_path")
 
     body = {
         "kind": "api#channel",
