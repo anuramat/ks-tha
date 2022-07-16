@@ -29,7 +29,7 @@ def save_data():
     # ['№', 'заказ №', 'стоимость,$', 'срок поставки'], ['1', '1249708', '675', '24.05.2021']
     with Session() as session:
         db_new_rows = []
-        for row in spreadsheet_row[1:]:
+        for row in spreadsheet_rows[1:]:
             db_row = models.Order(
                 pseudo_id=row[0],
                 order_id=row[1],
