@@ -15,8 +15,30 @@ update_headers = {"update", "sync", "change"}
 
 @app.route("/")
 def index():
-    return "\n".join([str(i)+'\t' for i in load_data()])
-
+    sql_rows = load_data()
+    header_row = (
+            'pseudo_id',
+            'order_id',
+            'usd_price',
+            'rur_price',
+            'deadline'
+            )
+    rows=[]
+    for row in sql_rows:
+        rows.append((
+            row.pseudo_id,
+            row.order_id,
+            row.usd_price,
+            f'{row.rur_price:.2f}',
+            row.deadline
+            ))
+    head = ''
+    head += f'<thead><tr>{"".join(["<th>"+i+"</th>" for i in header_row])}</tr></thead>'
+    body = ''
+    for row in rows:
+        body += f'<tr>{"".join(["<th>"+str(i)+"</th>" for i in row])}</tr>'
+    body = f'<tbody>{body}<tbody>'
+    return f'<table>{head+body}</table>'
 
 @app.route(update_path, methods=["POST"])
 def update():
@@ -29,13 +51,13 @@ if __name__ == "__main__":
     scheduler = BackgroundScheduler()
     update_mode = environ.get("update_mode")
     update_mode = 'pull'
-    if update_mode not in {'push', 'pull'}:
-        raise ValueError
     if update_mode == 'push':
         resubscribe()
         scheduler.add_job(resubscribe, "interval", minutes=50)
     elif update_mode == 'pull':
         scheduler.add_job(save_data, "interval", seconds=2)
+    else:
+        raise ValueError
     scheduler.start()
 
     # create table
