@@ -34,5 +34,3 @@ def get_data() -> list[list[str]]:
     response = request.execute()
 
     return response["values"]
-
-wrapper()
