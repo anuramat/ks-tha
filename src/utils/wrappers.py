@@ -4,25 +4,38 @@ from utils.db import Base
 from sqlalchemy import select
 from utils.db import Session
 from datetime import date
-
+from utils.data import get_data
+from exchange_rate import get_usd_rate
 
 # read stuff
 def load_data():
+    """
+    Reads rows from db
+    """
+    results = []
     with Session() as session:
         stmt = select(models.Order)
-        for order in session.scalars(stmt):
-            print(order)
+        for row in session.execute(stmt):
+            results.append(row)
 
 
 def save_data():
+    """
+    Polls spreadsheet from google sheets,
+    saves spreadsheet to db
+    """
+    spreadsheet_rows = get_data()
+    usd_rate = get_usd_rate()
+    # ['№', 'заказ №', 'стоимость,$', 'срок поставки'], ['1', '1249708', '675', '24.05.2021']
     with Session() as session:
-        # TODO
-        firstrow = models.Order(
-            pseudo_id=123,
-            order_id=234,
-            usd_price=100,
-            rur_price=5000,
-            deadline=date(2020, 1, 15),
-        )
-        session.add_all([firstrow])
+        db_new_rows = []
+        for row in spreadsheet_row[1:]:
+            db_row = models.Order(
+                pseudo_id=row[0],
+                order_id=row[1],
+                usd_price=row[2],
+                rur_price=usd_rate * row[2],
+                deadline=date(*[int(i) for i in xd.split(".")[::-1]]),
+            )
+        session.add_all(db_new_rows)
         session.commit()

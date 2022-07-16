@@ -5,6 +5,8 @@ from utils.exchange_rate import get_usd_rate
 from utils.resubscribe import resubscribe
 from utils import models
 from utils.db import engine
+from utils.db import Base
+from utils.wrappers import load_data, save_data
 
 app = Flask(__name__)
 update_path = environ.get("channel_path")
@@ -13,14 +15,14 @@ update_headers = {"update", "sync", "change"}
 
 @app.route("/")
 def index():
-    return 'nothing here yet...' # read table from db TODO
+    return "\n".join([str(i) for i in load_data()])
 
 
 @app.route(update_path, methods=["POST"])
 def update():
     if request.headers.get("X-Goog-Resource-State") in update_headers:
-        pass # read sheet, save to db TODO
-    return 'thanks'
+        save_data()
+    return "thanks"
 
 
 if __name__ == "__main__":
@@ -28,5 +30,8 @@ if __name__ == "__main__":
     scheduler = BackgroundScheduler()
     scheduler.add_job(resubscribe, "interval", minutes=50)
     scheduler.start()
+
+    # create table
+    Base.metadata.create_all(engine)
 
     app.run(host="0.0.0.0", port=5000, debug=True)
