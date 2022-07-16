@@ -21,6 +21,7 @@ services:
     environment:
       UPSTREAM: main:5000
       SERVERNAME: ${hostname}
+      EXTRANAMES: www.nuramatov.com
     ports:
       - "80:80"
       - "443:443"

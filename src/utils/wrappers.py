@@ -8,16 +8,15 @@ from datetime import date
 from utils.data import get_data
 from utils.exchange_rate import get_usd_rate
 
-def 
 # read stuff
 def load_data():
     """
     Reads rows from db
     """
     with Session() as session:
-        statement = select(models.Order)
-        result = session.execute(statement).all()
-    # TODO
+        result = session.query(models.Order)
+        prettier = [i.usd_price for i in result]
+    return prettier
 
 def save_data():
     """
@@ -28,6 +27,7 @@ def save_data():
     usd_rate = get_usd_rate()
     # ['№', 'заказ №', 'стоимость,$', 'срок поставки'], ['1', '1249708', '675', '24.05.2021']
     with Session() as session:
+        session.query(models.Order).delete()
         for row in spreadsheet_rows[1:]:
             db_row = models.Order(
                 pseudo_id=int(row[0]),
@@ -39,7 +39,3 @@ def save_data():
             session.add(db_row)
         session.commit()
 
-def delete_data():
-    with Session() as session:
-        session.query(models.Order).delete()
-        session.commit()
