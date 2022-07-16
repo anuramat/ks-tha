@@ -3,6 +3,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from os import environ
 from utils.exchange_rate import get_usd_rate
 from utils.resubscribe import resubscribe
+from utils import models
+from utils.db import engine
 
 app = Flask(__name__)
 update_path = environ.get("channel_path")
