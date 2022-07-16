@@ -26,6 +26,3 @@ def save_data():
         )
         session.add_all([firstrow])
         session.commit()
-
-save_data()
-load_data()
