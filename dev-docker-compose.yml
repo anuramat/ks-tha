@@ -1,0 +1,17 @@
+services:
+  main:
+    build: .
+    ports:
+      - ${port}:${port}
+    command: python src/app.py
+    environment:
+      channel_path: /update
+      dbhost: db
+      port: ${port}
+    env_file: .env
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    env_file: .env
