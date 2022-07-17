@@ -157,7 +157,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -238,4 +237,3 @@ tags
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,vim,visualstudiocode,python
-credentials.json
