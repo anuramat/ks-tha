@@ -5,7 +5,7 @@ Push update method requires Google Drive API and a domain name (for Let's Encryp
 0. Turn on Google Sheets
 1. Create .env file in project root
 2. Add credentials.json file for Google API service account with read priveleges (to project root).
-3. Run `docker compose up`. If you don't need notifications, you can `docker compose -f dev-docker-compose.yml` for a local version without nginx.
+3. Run `docker compose up`. If you don't need notifications, you can use `dev.sh` for a local version without nginx.
 ### .env example:
 ```
 # spreadsheet name in google sheets file
