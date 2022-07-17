@@ -16,20 +16,6 @@ services:
     env_file: .env
     depends_on:
       - db
-  nginx-ssl-proxy:
-    image: danieldent/nginx-ssl-proxy
-    restart: always
-    environment:
-      UPSTREAM: main:${port}
-      SERVERNAME: ${hostname}
-      EXTRANAMES: www.nuramatov.com
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/etc/letsencrypt"
-    depends_on:
-      - main
   db:
     image: postgres
     restart: always
