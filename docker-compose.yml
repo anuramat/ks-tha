@@ -1,13 +1,8 @@
-version: "1.0"
 services:
   main:
     build: .
     ports:
       - ${port}:${port}
-    volumes:
-      - type: bind
-        source: .
-        target: /code/
     command: python src/app.py
     environment:
       channel_path: /update
