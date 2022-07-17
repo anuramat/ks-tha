@@ -4,7 +4,7 @@ Push update method requires Google Drive API and a domain name (for Let's Encryp
 ### How to run
 0. Turn on Google Sheets
 1. Create .env file in project root
-2. Add Google API credentials.json file for service account with read priveleges.
+2. Add credentials.json file for Google API service account with read priveleges (to project root).
 3. Run `docker compose up`
 ### .env example:
 ```
